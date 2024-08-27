@@ -5,6 +5,20 @@ from api.v1.exception.notfound_exception import NotFoundException
 class AuthorsService:
     @staticmethod
     def create_author(name, bio, birth_date):
+        """
+        Creates a new author with the given name, bio, and birth date.
+        
+        Args:
+            name (str): The name of the author.
+            bio (str): The bio of the author.
+            birth_date (str): The birth date of the author.
+        
+        Returns:
+            dict: A dictionary containing the id, name, bio, and birth date of the created author.
+        
+        Raises:
+            InternalServerErrorException: If an error occurs during the creation of the author.
+        """
         try:
             author = Authors(name=name, bio=bio, birth_date=birth_date)
             author.save()
@@ -24,6 +38,15 @@ class AuthorsService:
 
     @staticmethod
     def get_authors():
+        """
+        Retrieves a list of all authors in the database.
+        
+        Returns:
+            list: A list of dictionaries containing the id, name, bio, and birth date of each author.
+        
+        Raises:
+            InternalServerErrorException: If an error occurs during the retrieval of authors.
+        """
         try:
             authors = Authors.objects.all()
             
@@ -44,6 +67,19 @@ class AuthorsService:
         
     @staticmethod
     def get_author_by_id(id):
+        """
+        Retrieves an author by their ID from the database.
+        
+        Args:
+            id (int): The ID of the author to retrieve.
+        
+        Returns:
+            dict: A dictionary containing the id, name, bio, and birth date of the author.
+        
+        Raises:
+            NotFoundException: If the author with the given ID does not exist.
+            InternalServerErrorException: If an error occurs during the retrieval of the author.
+        """
         try:
             author = Authors.objects.get(id=id)
             author_data = {
@@ -62,6 +98,22 @@ class AuthorsService:
         
     @staticmethod
     def update_author_by_id(id, name, bio, birth_date):
+        """
+        Updates an author's information in the database.
+
+        Args:
+            id (int): The ID of the author to update.
+            name (str): The new name of the author.
+            bio (str): The new bio of the author.
+            birth_date (str): The new birth date of the author.
+
+        Returns:
+            dict: A dictionary containing the updated author information.
+
+        Raises:
+            NotFoundException: If the author with the given ID does not exist.
+            InternalServerErrorException: If an error occurs during the update.
+        """
         try:
             author = Authors.objects.get(id=id)
             author.name = name
@@ -85,6 +137,19 @@ class AuthorsService:
         
     @staticmethod
     def delete_author_by_id(id):
+        """
+        Deletes an author by their ID from the database.
+
+        Args:
+            id (int): The ID of the author to delete.
+
+        Returns:
+            None
+
+        Raises:
+            NotFoundException: If the author with the given ID does not exist.
+            InternalServerErrorException: If an error occurs during the deletion.
+        """
         try:
             author = Authors.objects.get(id=id)
             author.delete()
@@ -97,6 +162,19 @@ class AuthorsService:
         
     @staticmethod
     def get_books_by_author_id(id):
+        """
+        Retrieves a list of books written by an author with the given ID.
+
+        Args:
+            id (int): The ID of the author.
+
+        Returns:
+            list: A list of dictionaries containing book data, including ID, author name, title, description, and publish date.
+
+        Raises:
+            NotFoundException: If the author with the given ID does not exist.
+            InternalServerErrorException: If an error occurs during the retrieval.
+        """
         try:
             author = Authors.objects.get(id=id)
             books = Books.objects.filter(author=author)
