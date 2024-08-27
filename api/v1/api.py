@@ -8,6 +8,7 @@ from api.v1.exception.notfound_exception import NotFoundException
 from api.v1.exception.internal_server_error_exception import InternalServerErrorException
 
 from api.v1.authors.controllers.authors_controller import authors_router
+from api.v1.books.controllers.books_controller import books_router
 
 library_management_api = NinjaAPI(
     title="Library Management API",
@@ -16,6 +17,7 @@ library_management_api = NinjaAPI(
 )
 
 library_management_api.add_router("/authors", authors_router)
+library_management_api.add_router("/books", books_router)
 
 
 @library_management_api.exception_handler(BadRequestException)
