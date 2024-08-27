@@ -12,6 +12,9 @@ nb_venv/
 notebook/
 flat_pdf/
 
+# Migrations
+/api/migrations
+
 # Distribution / packaging
 .Python
 build/
