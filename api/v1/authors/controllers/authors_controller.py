@@ -70,3 +70,13 @@ def delete_author_by_id(request: WSGIRequest, path: AuthorsGetByIdPathSchema = P
     return JsonResponse(data={
         "message": "Author deleted successfully",
     })
+
+@authors_router.get("/{id}/books")
+def get_books_by_author_id(request: WSGIRequest, path: AuthorsGetByIdPathSchema = Path(...)):
+
+    result = service.get_books_by_author_id(id=path.id)
+
+    return JsonResponse(data={
+        "message": "Books retrieved successfully",
+        "payload": result
+    })

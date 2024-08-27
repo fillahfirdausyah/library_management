@@ -1,4 +1,5 @@
 from api.v1.db.Authors import Authors
+from api.v1.db.Books import Books
 from api.v1.exception.internal_server_error_exception import InternalServerErrorException
 from api.v1.exception.notfound_exception import NotFoundException
 class AuthorsService:
@@ -88,6 +89,29 @@ class AuthorsService:
             author = Authors.objects.get(id=id)
             author.delete()
             return
+        except Authors.DoesNotExist:
+            raise NotFoundException(message="Author not found")
+        except Exception as e:
+            print(e)
+            raise InternalServerErrorException
+        
+    @staticmethod
+    def get_books_by_author_id(id):
+        try:
+            author = Authors.objects.get(id=id)
+            books = Books.objects.filter(author=author)
+            books_data = []
+            for book in books:
+                book_data = {
+                    "id": book.id,
+                    "author": book.author.name,
+                    "title": book.title,
+                    "description": book.description,
+                    "publish_date": book.publish_date
+                }
+                books_data.append(book_data)
+
+            return books_data
         except Authors.DoesNotExist:
             raise NotFoundException(message="Author not found")
         except Exception as e:
