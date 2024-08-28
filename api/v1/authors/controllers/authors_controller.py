@@ -23,7 +23,7 @@ def create_author(request: WSGIRequest, body: AuthorsBodySchema = Body(...)):
     return JsonResponse(data={
         "message": "Author created successfully",
         "payload": result
-    })
+    }, status=201)
 
 @authors_router.get("")
 def get_authors(request: WSGIRequest):

@@ -48,7 +48,7 @@ def create_book(request: WSGIRequest, body: BooksBodySchema = Body(...)):
     return JsonResponse(data={
         "message": "Book created successfully",
         "payload": result
-    })
+    }, status=201)
 
 
 @books_router.put("/{id}")
